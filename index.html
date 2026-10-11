@@ -1,0 +1,233 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no" />
+  <meta name="theme-color" content="#07111f" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="Recovery Quest" />
+  <link rel="manifest" href="manifest.webmanifest" />
+  <link rel="apple-touch-icon" href="icon-192.svg" />
+  <link rel="stylesheet" href="styles.css" />
+  <title>Recovery Quest V10</title>
+</head>
+<body>
+  <main class="app">
+    <section class="topbar">
+      <div>
+        <p class="eyebrow">RECOVERY QUEST V10</p>
+        <h1>Rebuild the life</h1>
+      </div>
+      <button id="openSettings" class="icon-btn" aria-label="Open settings">⚙︎</button>
+    </section>
+
+    <nav class="tabs" aria-label="App sections">
+      <button class="tab active" data-view="home">Home</button>
+      <button class="tab" data-view="calendar">Calendar</button>
+      <button class="tab" data-view="insights">Insights</button>
+      <button class="tab" data-view="goals">Goals</button>
+    </nav>
+
+    <section id="view-home" class="view">
+      <section class="world card">
+        <div class="world-grid">
+          <div class="avatar-zone">
+            <div id="avatar" class="avatar stage-1" aria-label="Recovery avatar">
+              <div class="halo"></div><div class="head"></div><div class="body"></div>
+            </div>
+            <div class="avatar-copy">
+              <p class="eyebrow">YOUR CHARACTER</p>
+              <h2 id="rankName">Starter</h2>
+              <p id="phaseText" class="muted">Phase 1 · Protect the crash</p>
+            </div>
+          </div>
+          <div class="bars">
+            <div class="bar-wrap"><div class="bar-label"><span>Recovery</span><b id="healthText">60%</b></div><div class="bar"><div id="healthBar" class="fill health"></div></div></div>
+            <div class="bar-wrap"><div class="bar-label"><span>Momentum</span><b id="energyText">40%</b></div><div class="bar"><div id="energyBar" class="fill energy"></div></div></div>
+            <div class="bar-wrap"><div class="bar-label"><span>XP</span><b><span id="xpNow">0</span>/<span id="xpNext">500</span></b></div><div class="bar"><div id="xpBar" class="fill xp"></div></div></div>
+          </div>
+        </div>
+        <div class="progress-track"><div id="progressBar" class="progress-bar"></div></div>
+        <div class="progress-row"><span>Day <b id="dayNow">0</b> / <b id="campaignLength">120</b></span><span><b id="percentNow">0</b>%</span></div>
+      </section>
+
+      <section class="stats-grid">
+        <div class="stat card"><span>Clean streak</span><b><i id="streak">0</i> days</b></div>
+        <div class="stat card"><span>Best streak</span><b><i id="bestStreak">115</i> days</b></div>
+        <div class="stat card"><span>Shield</span><b>🛡️ <i id="shieldCount">1</i></b></div>
+        <div class="stat card"><span>Badges</span><b><i id="achievementCount">0</i>/12</b></div>
+      </section>
+
+      <section class="money card">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">MONEY VAULT</p>
+            <h2>Money you kept</h2>
+          </div>
+          <div class="total-saved">£<span id="totalSaved">0</span></div>
+        </div>
+        <div class="money-grid">
+          <div><span>Cannabis</span><b>£<i id="weedSaved">0</i></b><small id="weedRateText">£15/day</small></div>
+          <div><span>Cocaine</span><b>£<i id="cocaineSaved">0</i></b><small id="cokeRateText">£100/day</small></div>
+        </div>
+        <div class="goal-card">
+          <div><p class="eyebrow">NEXT UNLOCK</p><h3 id="goalTitle">ADR course fund</h3><p class="muted">Target £<span id="goalTargetText">650</span></p></div>
+          <strong id="goalProgress">£0 / £650</strong>
+        </div>
+        <div class="progress-track slim"><div id="goalBar" class="progress-bar"></div></div>
+      </section>
+
+      <section class="card">
+        <div class="section-head">
+          <div><p class="eyebrow">DAILY MISSIONS</p><h2>Earn today</h2></div>
+          <button id="completeDay" class="primary">Complete day</button>
+        </div>
+        <div class="missions" id="missions"></div>
+        <div class="form-grid">
+          <label>Craving
+            <select id="craving"><option value="0">0 · None</option><option value="1">1 · Mild</option><option value="2">2 · Noticeable</option><option value="3">3 · Strong</option><option value="4">4 · Very strong</option><option value="5">5 · Emergency</option></select>
+          </label>
+          <label>Mood
+            <select id="mood"><option>Good</option><option>Okay</option><option>Flat</option><option>Low</option><option>Anxious</option><option>Irritable</option></select>
+          </label>
+          <label>Sleep
+            <select id="sleep"><option>Good</option><option>Average</option><option>Poor</option><option>Very poor</option></select>
+          </label>
+        </div>
+        <label class="notes-label">Notes
+          <textarea id="dailyNotes" rows="2" placeholder="What helped today? What was difficult?"></textarea>
+        </label>
+        <p id="checkinMessage" class="message"></p>
+      </section>
+
+      <section id="riskCard" class="card risk-card">
+        <div class="section-head">
+          <div><p class="eyebrow">RISK METER</p><h2 id="riskTitle">Low risk</h2></div>
+          <span id="riskScore" class="risk-score">0</span>
+        </div>
+        <p id="riskAdvice" class="muted">Keep stacking routine and sleep.</p>
+      </section>
+
+      <section class="card">
+        <p class="eyebrow">CRAVING BOSS BATTLE</p>
+        <h2>Beat the urge, earn XP</h2>
+        <p class="muted">Do one action before making any decision for 20 minutes.</p>
+        <div class="action-grid">
+          <button class="bossAction" data-xp="20">💧 Hydrate</button>
+          <button class="bossAction" data-xp="30">🚶 10-min walk</button>
+          <button class="bossAction" data-xp="40">📞 Contact someone</button>
+          <button class="bossAction" data-xp="25">🚿 Eat + shower</button>
+        </div>
+      </section>
+
+      <section class="card">
+        <p class="eyebrow">ACHIEVEMENTS</p>
+        <h2>Badges</h2>
+        <div id="achievements" class="achievement-grid"></div>
+      </section>
+
+      <section class="card">
+        <div class="section-head">
+          <div><p class="eyebrow">SLIP PROTOCOL</p><h2>Learn, don’t punish</h2></div>
+          <button id="logSlip" class="secondary">Log a slip</button>
+        </div>
+        <div id="slipPanel" class="hidden slip-panel">
+          <label>What triggered it?
+            <textarea id="slipReason" rows="3" placeholder="Boredom, payday, stress, people, alcohol, finishing shifts…"></textarea>
+          </label>
+          <label>What happened immediately before?
+            <textarea id="slipContext" rows="2" placeholder="Where were you, who were you with, what were you feeling?"></textarea>
+          </label>
+          <label class="shield-choice"><input id="useShield" type="checkbox"> Use one streak shield if available</label>
+          <div class="button-row">
+            <button id="saveSlip" class="primary">Save lesson</button>
+            <button id="cancelSlip" class="secondary">Cancel</button>
+          </div>
+          <p id="slipMsg" class="message"></p>
+        </div>
+      </section>
+
+      <section class="card">
+        <p class="eyebrow">YOUR WHY</p>
+        <h2>Keep the reason stronger</h2>
+        <textarea id="whyText" rows="4" placeholder="HGV career, health, money, freedom, confidence, businesses, family…"></textarea>
+      </section>
+    </section>
+
+    <section id="view-calendar" class="view hidden">
+      <section class="card">
+        <div class="section-head">
+          <div><p class="eyebrow">CLEAN-DAY CALENDAR</p><h2 id="calendarTitle">This month</h2></div>
+          <div class="calendar-nav"><button id="prevMonth" class="icon-btn">‹</button><button id="nextMonth" class="icon-btn">›</button></div>
+        </div>
+        <div class="weekday-row"><span>M</span><span>T</span><span>W</span><span>T</span><span>F</span><span>S</span><span>S</span></div>
+        <div id="calendar" class="calendar"></div>
+        <div class="calendar-legend"><span><i class="dot clean"></i> Clean</span><span><i class="dot slip"></i> Slip</span><span><i class="dot today"></i> Today</span></div>
+      </section>
+      <section class="card">
+        <p class="eyebrow">QUEST MAP</p>
+        <h2>Campaign milestones</h2>
+        <div id="milestones" class="milestones"></div>
+      </section>
+    </section>
+
+    <section id="view-insights" class="view hidden">
+      <section class="card">
+        <p class="eyebrow">INSIGHTS</p>
+        <h2>What your pattern is showing</h2>
+        <div class="insight-grid">
+          <div class="insight"><span>Average craving</span><b id="avgCraving">0.0</b></div>
+          <div class="insight"><span>High-craving days</span><b id="highCravingDays">0</b></div>
+          <div class="insight"><span>Boss actions used</span><b id="bossActionsCount">0</b></div>
+          <div class="insight"><span>Slips logged</span><b id="slipsCount">0</b></div>
+        </div>
+      </section>
+      <section class="card">
+        <p class="eyebrow">TREND</p>
+        <h2>Last 14 check-ins</h2>
+        <div id="trendChart" class="trend-chart" aria-label="Craving trend chart"></div>
+      </section>
+      <section class="card">
+        <p class="eyebrow">TRIGGER PATTERNS</p>
+        <h2>Common words in slip notes</h2>
+        <div id="triggerWords" class="tag-cloud"></div>
+      </section>
+    </section>
+
+    <section id="view-goals" class="view hidden">
+      <section class="card">
+        <p class="eyebrow">REAL-WORLD GOALS</p>
+        <h2>Turn saved money into progress</h2>
+        <div id="goalList" class="goal-list"></div>
+      </section>
+      <section class="card">
+        <p class="eyebrow">ADD GOAL</p>
+        <div class="form-grid">
+          <label>Name<input id="newGoalName" type="text" placeholder="HIAB course"></label>
+          <label>Target £<input id="newGoalTarget" type="number" min="1" step="1" placeholder="800"></label>
+        </div>
+        <button id="addGoal" class="primary full">Add goal</button>
+      </section>
+    </section>
+
+    <section id="settingsPanel" class="sheet hidden">
+      <div class="sheet-card">
+        <div class="section-head"><div><p class="eyebrow">SETTINGS</p><h2>Recovery Quest</h2></div><button id="closeSettings" class="icon-btn">×</button></div>
+        <div class="settings-grid">
+          <label>Campaign days<input id="settingCampaign" type="number" min="30" max="365" value="120"></label>
+          <label>Cannabis £/day<input id="settingWeed" type="number" min="0" step="1" value="15"></label>
+          <label>Cocaine £/day<input id="settingCoke" type="number" min="0" step="1" value="100"></label>
+        </div>
+        <button id="saveSettings" class="primary full">Save settings</button>
+        <div class="divider"></div>
+        <button id="exportData" class="secondary full">Export backup</button>
+        <label class="import-label secondary full">Import backup<input id="importData" type="file" accept="application/json"></label>
+        <button id="resetApp" class="danger full">Reset all progress</button>
+        <p class="muted tiny">Progress is stored locally on this iPhone/browser. Export a backup before clearing Safari data.</p>
+      </div>
+    </section>
+  </main>
+  <script src="app.js"></script>
+</body>
+</html>
